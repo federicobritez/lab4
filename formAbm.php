@@ -25,5 +25,65 @@
   </head>
 
   <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+          <div class="menu_section">
+            <div class="col-lg-3">
+              <h3>Menu Vertical</h3>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <?php
+        
+        //Recupero mi menu desde la variable Global Session
+        $menu =  $_SESSION["Menu"];
+
+        // Si hay una opción de la trato
+        if(! isset($_REQUEST["opcion"])){
+                echo "bada";
+        }
+        else{
+
+            //Agregar un menu
+            if($_REQUEST["opcion"] == "agregar"){
+
+                //Información enviada por el formulario
+                $etiqueta = $_REQUEST["etiqueta"];  //Etiqueta
+                $url =      $_REQUEST["url"];       //URL
+
+                //El codEnlace se genera con un hash :ver http://php.net/manual/es/function.hash.php
+                $item = new MenuItem(hash($etiqueta.$url), $etiqueta,$url);
+
+                //Agrego el item al menu
+                $menu->agregarItem($item);
+
+            }
+            //Eliminar un item del  menu
+            else if ($_REQUEST["opcion"] == "eliminar"){
+                var_dump($_REQUEST);
+                //Requiere la posición en el arreglo
+                $posicion = $_REQUEST["posicion"];
+                $menu->borrarItem($posicion);
+
+            }
+            else if ($_REQUEST["opcion"] == "modificar"){
+                $etiqueta = $_REQUEST["etiqueta"];  //Etiqueta
+                $url =      $_REQUEST["url"];       //URL
+                $posicion = $_REQUEST["posicion"];
+
+                //El codEnlace se genera con un hash :ver http://php.net/manual/es/function.hash.php
+                $item = new MenuItem(hash($etiqueta.$url), $etiqueta,$url);
+
+                $menu->modificarItem($item,$posicion);
+
+            }
+
+        }
+
+        $_SESSION["Menu"] = $menu;
+    ?>
+    <a href="index.php" class="btn btn-default" >Ver cambios</a>
 
   </body>

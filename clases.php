@@ -85,6 +85,10 @@
 			}
 		}
 
+		public function modificarItem($nuevoItem,$pos){
+			$this->aItems[$pos]= $nuevoItem;
+		}
+
 		public function getItems(){
 			return $this->aItems;
 		}

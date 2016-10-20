@@ -23,7 +23,9 @@
 
     <?php
       include("clases.php"); // El archivo que contiene las clases
-      session_start();  //Inicia la  session 
+
+      session_start();  //Inicia la  session
+      //unset($_SESSION["Menu"]);  // Limpio la variable de la session 
       //Si la session aun no tiene los menu , cargo algunos por default
       $menu = null;
       if(! array_key_exists("Menu", $_SESSION)){  
@@ -37,6 +39,7 @@
             //La agrego al menu
             $menu->agregarItem($item);
           }
+          
           $_SESSION["Menu"] = $menu;
       }
       
@@ -59,7 +62,7 @@
             <h3>Menu Horizontal</h3>
             <?php
                   //Pruebo borrar un item 
-                  $_SESSION["Menu"]->borrarItem(3);
+                  //$_SESSION["Menu"]->borrarItem(3);
 
                   //Despliego el menu en forma Horizontal
                   $_SESSION["Menu"]->getHTMLMenuHorizantal(); 
@@ -77,13 +80,13 @@
                 <div class="form-group">
                   <label for="inputEtiqueta" class="col-lg-2 control-label">Etiqueta</label>
                   <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputEtiqueta" placeholder="Etiqueta">
+                    <input type="text" class="form-control" name="etiqueta" id="inputEtiqueta" placeholder="Etiqueta">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputURL" class="col-lg-2 control-label">URL</label>
                   <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputURL" placeholder="URL">
+                    <input type="text" class="form-control" name="url" id="inputURL" placeholder="URL">
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Agregar</button>
@@ -102,7 +105,7 @@
                   <div class="form-group">
                     <label for="select" class="col-lg-2 control-label">Selects</label>
                     <div class="col-lg-10">
-                      <select class="form-control" id="select">
+                      <select class="form-control" name="posicion" id="posicion">
                         <?php
                           $Menu = $_SESSION["Menu"];
 
@@ -121,13 +124,13 @@
                 <div class="form-group">
                   <label for="inputEtiqueta" class="col-lg-2 control-label">Nueva Etiqueta</label>
                   <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputEtiqueta" placeholder="Etiqueta">
+                    <input type="text" class="form-control" name="etiqueta" id="inputEtiqueta" placeholder="Etiqueta">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputURL" class="col-lg-2 control-label">Nueva URL</label>
                   <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputURL" placeholder="URL">
+                    <input type="text" class="form-control" name="url" id="inputURL" placeholder="URL">
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Modificar</button>
@@ -147,7 +150,7 @@
                   <div class="form-group">
                     <label for="select" class="col-lg-2 control-label">Selects</label>
                     <div class="col-lg-10">
-                      <select class="form-control" id="select">
+                      <select class="form-control" name="posicion" id="posicion">
                          <?php
                           $Menu = $_SESSION["Menu"];
 
