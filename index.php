@@ -25,6 +25,7 @@
       include("clases.php"); // El archivo que contiene las clases
       session_start();  //Inicia la  session 
       //Si la session aun no tiene los menu , cargo algunos por default
+      $menu = null;
       if(! array_key_exists("Menu", $_SESSION)){  
           //Creo un menu 
           $menu = new Menu();
@@ -36,7 +37,7 @@
             //La agrego al menu
             $menu->agregarItem($item);
           }
-
+          $_SESSION["Menu"] = $menu;
       }
       
 
@@ -48,7 +49,7 @@
               <h3>Menu Vertical</h3>
                   <?php
                     //Despliega el menu en forma Vertical
-                    $menu->getHTMLMenuVertical(); 
+                    $_SESSION["Menu"]->getHTMLMenuVertical(); 
                   ?>
             </div>
           </div>
@@ -58,21 +59,115 @@
             <h3>Menu Horizontal</h3>
             <?php
                   //Pruebo borrar un item 
-                  $menu->borrarItem(3);
+                  $_SESSION["Menu"]->borrarItem(3);
 
                   //Despliego el menu en forma Horizontal
-                  $menu->getHTMLMenuHorizantal(); 
+                  $_SESSION["Menu"]->getHTMLMenuHorizantal(); 
             ?>
           </div>
       </div>  
       <hr>
 
       <div class="menu_section">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
+          <div class="well bs-component">
+            <form class="form-horizontal" action="formAbm.php?opcion=agregar" method="POST">
+              <fieldset>
+                <legend>Agregar</legend>
+                <div class="form-group">
+                  <label for="inputEtiqueta" class="col-lg-2 control-label">Etiqueta</label>
+                  <div class="col-lg-10">
+                    <input type="text" class="form-control" id="inputEtiqueta" placeholder="Etiqueta">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputURL" class="col-lg-2 control-label">URL</label>
+                  <div class="col-lg-10">
+                    <input type="text" class="form-control" id="inputURL" placeholder="URL">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Agregar</button>
+              </fieldset>
 
-          <a href="formAbm.php?opcion=agregar" class="btn btn-default">Agregar</a>
-          <a href="formAbm.php?opcion=eliminar" class="btn btn-primary">Eliminar</a>
-          <a href="formAbm.php?opcion=modificar" class="btn btn-success">Modificar</a>
+            </form>
+          </div>
+          <br>                    
+          <hr>
+
+           <div class="well bs-component">
+            <form class="form-horizontal" action="formAbm.php?opcion=modificar" method="POST">
+              <fieldset>
+                <legend>Modificar</legend>
+
+                  <div class="form-group">
+                    <label for="select" class="col-lg-2 control-label">Selects</label>
+                    <div class="col-lg-10">
+                      <select class="form-control" id="select">
+                        <?php
+                          $Menu = $_SESSION["Menu"];
+
+                          $i = 0;
+                          foreach ($Menu->getItems() as  $itemMenu) {
+
+                             echo '<option value="'.$i.'">'.$itemMenu->getNombre().'</option>';
+                              $i++;
+                          }
+
+                        ?>
+                    </select>
+                    <br>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEtiqueta" class="col-lg-2 control-label">Nueva Etiqueta</label>
+                  <div class="col-lg-10">
+                    <input type="text" class="form-control" id="inputEtiqueta" placeholder="Etiqueta">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputURL" class="col-lg-2 control-label">Nueva URL</label>
+                  <div class="col-lg-10">
+                    <input type="text" class="form-control" id="inputURL" placeholder="URL">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Modificar</button>
+              </fieldset>
+
+            </form>
+          </div>
+
+           <br>                    
+          <hr>
+
+           <div class="well bs-component">
+            <form class="form-horizontal" action="formAbm.php?opcion=eliminar" method="POST">
+              <fieldset>
+                <legend>Eliminar</legend>
+
+                  <div class="form-group">
+                    <label for="select" class="col-lg-2 control-label">Selects</label>
+                    <div class="col-lg-10">
+                      <select class="form-control" id="select">
+                         <?php
+                          $Menu = $_SESSION["Menu"];
+
+                          $i = 0;
+                          foreach ($Menu->getItems() as  $itemMenu) {
+
+                             echo '<option value="'.$i.'">'.$itemMenu->getNombre().'</option>';
+                              $i++;
+                          }
+
+                        ?>
+                    </select>
+                    <br>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Eliminar</button>
+              </fieldset>
+            </form>
+          </div>
+
         </div>
       </div>
       

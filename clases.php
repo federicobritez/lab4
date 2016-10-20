@@ -83,7 +83,10 @@
 				$this->aItems = array_values($this->aItems);
 
 			}
-			
+		}
+
+		public function getItems(){
+			return $this->aItems;
 		}
 
 	}
